@@ -21,6 +21,7 @@ func TestDefaultCiphersExist(t *testing.T) {
 }
 
 var result []byte
+
 func benchmarkCipher(cipher string, mac string, b *testing.B) {
 	kr := &kexResult{Hash: crypto.SHA1}
 	algs := directionAlgorithms{
@@ -41,12 +42,30 @@ func benchmarkCipher(cipher string, mac string, b *testing.B) {
 	}
 	result = packet
 }
-func BenchmarkCipherAes128Sha512(b *testing.B)  { benchmarkCipher("aes128-ctr", "hmac-sha2-512-etm@openssh.com", b) }
-func BenchmarkCipherAes128Sha256(b *testing.B)  { benchmarkCipher("aes128-ctr", "hmac-sha2-256-etm@openssh.com", b) }
-func BenchmarkCipherAes192Sha512(b *testing.B)  { benchmarkCipher("aes192-ctr", "hmac-sha2-512-etm@openssh.com", b) }
-func BenchmarkCipherAes192Sha256(b *testing.B)  { benchmarkCipher("aes192-ctr", "hmac-sha2-256-etm@openssh.com", b) }
-func BenchmarkCipherAes256Sha512(b *testing.B)  { benchmarkCipher("aes256-ctr", "hmac-sha2-512-etm@openssh.com", b) }
-func BenchmarkCipherAes256Sha256(b *testing.B)  { benchmarkCipher("aes256-ctr", "hmac-sha2-256-etm@openssh.com", b) }
+func BenchmarkCipherAes128Sha512(b *testing.B) {
+	benchmarkCipher("aes128-ctr", "hmac-sha2-512-etm@openssh.com", b)
+}
+func BenchmarkCipherAes128Sha256(b *testing.B) {
+	benchmarkCipher("aes128-ctr", "hmac-sha2-256-etm@openssh.com", b)
+}
+func BenchmarkCipherAes192Sha512(b *testing.B) {
+	benchmarkCipher("aes192-ctr", "hmac-sha2-512-etm@openssh.com", b)
+}
+func BenchmarkCipherAes192Sha256(b *testing.B) {
+	benchmarkCipher("aes192-ctr", "hmac-sha2-256-etm@openssh.com", b)
+}
+func BenchmarkCipherAes256Sha512(b *testing.B) {
+	benchmarkCipher("aes256-ctr", "hmac-sha2-512-etm@openssh.com", b)
+}
+func BenchmarkCipherAes256Sha256(b *testing.B) {
+	benchmarkCipher("aes256-ctr", "hmac-sha2-256-etm@openssh.com", b)
+}
+func BenchmarkCipherAesGcmSha512(b *testing.B) {
+	benchmarkCipher(gcmCipherID, "hmac-sha2-512-etm@openssh.com", b)
+}
+func BenchmarkCipherAesGcmSha256(b *testing.B) {
+	benchmarkCipher(gcmCipherID, "hmac-sha2-256-etm@openssh.com", b)
+}
 
 func TestPacketCiphers(t *testing.T) {
 	// Still test aes128cbc cipher although it's commented out.
